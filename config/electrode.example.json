@@ -1,0 +1,9 @@
+{
+  "enabled": false,
+  "sample_integration_enabled": false,
+  "stock_control_enabled": false,
+  "backend": "sqlite",
+  "sqlite_path": ".\\electrode_control.db",
+  "scheduled_snapshots": ["08:00", "20:00"],
+  "notes": "Feature is dormant by default. Do not place the SQLite database on a network share. For multi-department production use, deploy the MariaDB schema/API and switch the repository implementation."
+}

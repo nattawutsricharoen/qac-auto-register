@@ -1,0 +1,11 @@
+QAC Auto Register v1.7.65 - focused stability patch
+
+Changed: app/qac_sync.py
+Added: tests/test_qac_sync_empty_timeline_guard.py
+
+Problem: A temporarily empty QAC Timeline DOM previously triggered immediate deletion of cached result IDs. Subsequent scans could require expensive rereads.
+Fix: If the timeline appears empty while the document has cached events, wait 350ms and read again before reconciliation. Do not add any delay to nonempty timelines. Preserve the original rule where a confirmed empty timeline clears deleted results.
+
+Verification: 93 pytest cases passed, 6 subtests passed; Python compile passed. Actual Edge/QAC integration and Android execution NOT tested. Existing app remains Windows/PySide6 and is NOT an Android APK.
+
+CAUTION: Additional failure sources, including shared tab indexes, worker races, QAC connectivity, and 90-second waits require real QAC logs and on-device checks. Backup app directory and databases before replacing files.

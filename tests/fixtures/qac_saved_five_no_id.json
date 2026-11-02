@@ -1,0 +1,36 @@
+{
+  "item_id": "411400",
+  "frequency": "5",
+  "slots": [
+    {
+      "slot_no": "1",
+      "empty_attribute": "false",
+      "row_text": "# 1 OK",
+      "result_attributes": []
+    },
+    {
+      "slot_no": "2",
+      "empty_attribute": "false",
+      "row_text": "# 2 OK",
+      "result_attributes": []
+    },
+    {
+      "slot_no": "3",
+      "empty_attribute": "false",
+      "row_text": "# 3 OK",
+      "result_attributes": []
+    },
+    {
+      "slot_no": "4",
+      "empty_attribute": "false",
+      "row_text": "# 4 OK",
+      "result_attributes": []
+    },
+    {
+      "slot_no": "5",
+      "empty_attribute": "false",
+      "row_text": "# 5 OK",
+      "result_attributes": []
+    }
+  ]
+}

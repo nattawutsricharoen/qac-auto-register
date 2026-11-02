@@ -1,0 +1,24 @@
+OCR NG Import - Windows setup
+
+Python packages:
+    pip install -r requirements.txt
+
+OCR executable:
+The program needs Tesseract OCR.
+
+Detection order:
+1. config/settings.json -> ocr.tesseract_cmd
+2. tools\Tesseract-OCR\tesseract.exe
+3. C:\Program Files\Tesseract-OCR\tesseract.exe
+4. C:\Program Files (x86)\Tesseract-OCR\tesseract.exe
+5. Windows PATH
+
+For a fully portable OneDir deployment, place a Windows portable
+Tesseract-OCR distribution inside:
+    tools\Tesseract-OCR\
+
+before running build_onedir.bat.
+The build script includes the tools folder.
+
+If Tesseract is not found, OCR NG Import fails closed with an error.
+No fake OCR values are generated.

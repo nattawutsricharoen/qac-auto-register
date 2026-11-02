@@ -1,0 +1,16 @@
+P11.14 - Daily Document safety/performance changes
+
+- Daily Document Page Binding: exact QAC origin + module window.name (fail closed if lost).
+- Scan, open Measure, and Register use only the tagged Daily QAC tab, no generic open-tab fallback.
+- Per-item DOM reader in preflight and persisted-result poll rather than reading all items.
+- Numeric item can proceed to the next existing numeric input without waiting for OK/NG buttons.
+- Operator templates auto-load at dialog open, auto-save (debounced, 350 ms) on change and on confirmation.
+- Numeric values saved as VALUE:<literal> per Item ID and absolute Slot No; 0 and decimals preserved.
+- Existing QAC result slots display EXIST and cannot be edited; preset intents retained separately.
+- Plan validation retains explicitly selected slot numbers. Writer refuses unsupported QAC input gaps rather than shifting results.
+- Per-item elapsed_ms logs added for performance measurements.
+- No Insert result, no forced click, no additional Slot creation.
+
+Offline: 145 tests and 11 subtests passed on Python 3.13.
+NOT live QAC verified and NO physical-machine CPU/RAM benchmark.
+Install as a separate folder first. Back up the existing database (especially template DB) before changing builds.

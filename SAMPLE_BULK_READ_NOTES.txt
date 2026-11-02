@@ -1,0 +1,24 @@
+Sample bulk read + Text Save fix — development candidate
+
+Sample Prepare reads the Measure DOM once, then reads prior results through
+QAC getItemContent (the same read endpoint used by the supplied page), with
+at most 3 concurrent requests. It does not activate all item panels.
+This is one browser-side batch, NOT a single server request: QAC's observed
+API takes one item per request. No undocumented bulk endpoint is assumed.
+
+Supported captured formats: Initial/Middle/Final, OK/NG, Numeric and Text.
+Unknown schemas, failed requests and ambiguous result slots fall back to the
+existing live-panel reader for the affected item. A changed task aborts.
+Saved serials retain leading zeros and slot numbers remain absolute.
+The write path still checks each live target and waits for QAC Complete.
+The preceding Text Save focusout fix is included.
+
+Scope: Sample Prepare performance. Auto Register and Daily are unchanged.
+No live QAC timing, server response validation or Windows EXE build performed.
+Offline results: 331 passed, 4 failed (missing external HTML fixtures),
+32 subtests passed. New bulk-reader tests: 9 passed.
+Logs include SAMPLE BULK SNAPSHOT items/panel_fallbacks/elapsed_ms.
+
+For source installs, update BOTH app/sample_register.py and the new
+app/sample_result_snapshot.py together. For EXE installs rebuild using the
+existing build procedure. Validate on a designated test document first.

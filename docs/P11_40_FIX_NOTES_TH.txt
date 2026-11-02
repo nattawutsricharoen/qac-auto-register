@@ -1,0 +1,16 @@
+P11.40 — QAC Numeric auto-disappearing Complete dialog
+
+Production-confirmed behavior:
+1) Numeric Enter -> SweetAlert Save Confirm -> click Yes, comfirm !
+2) QAC shows Complete ! without acknowledgement button and dismisses it automatically.
+3) QAC advances to next inspection item automatically in this document.
+4) Saved numeric values become observable only after reopening the item.
+5) Skip already-saved slots; never submit duplicate writes.
+
+Patch: qac_interaction.acknowledge_visible_modal now recognizes an informational
+buttonless "Complete !" and waits until the popup disappears, without clicking
+another button. If not dismissed after 15 sec, fail closed. Unknown INFO remains
+fail closed. Existing deferred Numeric batch verification remains unchanged.
+
+Offline validation: pytest 241 passed, 32 subtests passed; compileall passed.
+No live QAC write performed in this environment; requires on-site confirmation.

@@ -1,0 +1,8 @@
+P11.7 - Reference View parser dependency fix
+- Replaced BeautifulSoup (bs4) dependency in app/daily_reference_table.py with stdlib html.parser.
+- Preserves inspection_no / inspection_item / slot / raw_value / result_type schema.
+- Reference date or identity mismatch still prevents automatic registration.
+- Existing SQLite snapshot guard remains active.
+- Local tests: 19 passed + 6 subtests (relevant Daily/Reference suites).
+- Validation against supplied full QAC View HTML: 1 matrix, 76 inspections, 380 cells, 156 filled, 224 empty.
+- No live QAC server integration test performed.

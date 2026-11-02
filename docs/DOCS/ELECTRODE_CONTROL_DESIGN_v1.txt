@@ -1,0 +1,67 @@
+QAC Auto Register - Electrode Lifecycle / Stock Control (Dormant Feature)
+=======================================================================
+
+Current rollout state
+---------------------
+- Feature flag is OFF by default.
+- Existing QAC Auto Register runtime is not changed by this module.
+- SQLite implementation is LOCAL only and is used as reference/test repository.
+- Do NOT put SQLite on a LAN/SMB share.
+- MariaDB reference schema is included for future shared Spare Part/PD/Web use.
+
+Identity rules
+--------------
+731C-08260086
+  electrode_code = 731C
+  base identity = 731C-08260086
+  reuse_cycle = 0
+
+737D-08230032-R2
+  electrode_code = 737D
+  base identity = 737D-08230032
+  reuse_cycle = 2
+  -R2 is the second reuse cycle of the SAME physical base electrode.
+
+Authority
+---------
+- Spare Part owns electrode identity/master creation.
+- PD/QAC cannot create or edit Electrode No.
+- PD can receive, withdraw, install, snapshot shot, remove and return only.
+- Return is serialized: the exact cycle issued must be returned.
+
+Operational lifecycle
+---------------------
+SPARE_ISSUED -> PD_RECEIVED -> LINE_STOCK -> INSTALLED -> WAITING_RETURN -> COMPLETE
+
+LINE_STOCK is optional before install/return. Once COMPLETE, the cycle is excluded
+from routine active verification, but it remains queryable in history/audit.
+
+Reuse
+-----
+A new reuse cycle may be created only by Spare Part and only after the previous
+cycle is COMPLETE. Sequence is automatic and cannot skip R numbers.
+
+Machine/Position
+----------------
+Compatibility is master data. A code may be compatible with multiple positions,
+for example the same lower electrode code can be valid for Housing Bottle Welding
+Lower and Diffuser Bottle Welding Lower. Installation is blocked for incompatible
+positions and for an already-occupied position.
+
+Sample Register bridge
+----------------------
+ElectrodeSampleResolver is READ ONLY. It resolves the currently installed full
+Electrode No. for line + machine + position. This allows Sample Register to source
+Electrode No. from Electrode Control while shot can still come from SMP where present.
+Integration flag remains OFF until site acceptance tests are completed.
+
+Scheduled snapshots
+-------------------
+08:00 and 20:00 are configured as required snapshot times for future UI workflow.
+A snapshot is not an electrode change. Mid-shift changes remain event-driven.
+
+MariaDB migration path
+----------------------
+See database/electrode_mariadb_v1.sql. For shared multi-department use, deploy a
+service/API or web app against MariaDB/InnoDB. Do not let multiple PCs open a shared
+SQLite file directly.

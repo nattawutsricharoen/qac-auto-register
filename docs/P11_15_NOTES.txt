@@ -1,0 +1,8 @@
+P11.15 - QAC EXIST Interlock read fix (based on P11.14)
+
+Root cause: row.innerText returns an empty string for hidden fieldsets in QAC Measure, so recorded results were not detected.
+Fix: extract_daily_slot_schema, extract_daily_item_schema, _read_daily_existing_values now use row.textContent, valid for hidden DOM elements.
+Fail-closed: contradictory/unreadable result rows become UNKNOWN rather than EMPTY.
+Actual HTML fixture: item 335009 6 slots; #1 Initial result ID, #2 Middle result ID, #3 Final with data-empty=false but no result ID; #4-6 empty.
+Regression: 146 passed + 11 subtests with Chromium against supplied Measure HTML.
+No QAC live write was performed. Backup installation and database before upgrade.

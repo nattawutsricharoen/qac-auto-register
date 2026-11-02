@@ -1,0 +1,25 @@
+QAC Auto Register Desktop - 3 workflow browser isolation patch
+Source baseline: v1.7.65 STABILITY_CACHE_GUARD_TESTED
+
+1) Each QAC workflow has its own dedicated browser tab identified by window.name:
+    QAC_AUTO_REGISTER_MODULE (Auto Register / Alarm / OCR NG / Production Output)
+    QAC_DAILY_DOCUMENT_MODULE (Daily Document)
+    QAC_SAMPLE_REGISTER_MODULE (Sample Register)
+   A missing module gets a fresh QAC home tab instead of navigating another module back home.
+   Switching application's UI tabs alone does not navigate QAC.
+2) Daily Register consumes the FOUND task_id from the earlier scan. When that task is already visible,
+   it skips calendar restoration. Otherwise checks the correct monitor and requires exact task_id.
+   Avoids a silent false match after QAC data refresh.
+3) Sample preparation scans and edits ONLY its own tagged QAC tab.
+4) Regression tests added for the isolation logic.
+
+Tests performed here:
+  python -m compileall -q app main.py
+  python -m pytest -q --disable-warnings --maxfail=1
+  97 passed, 6 subtests passed.
+
+Not tested here: real Microsoft Edge, QAC live login/save, 24h stability, real Android APK.
+Known issue not patched: log "ERROR FIELD | 1 Time | ไม่มี NUMBER value สำหรับ slot ที่ว่าง".
+Cause needs actual Measure HTML/DOM and field slot state; do not guess/fill fake values.
+IMPORTANT: No automated creation implemented for MISSING Daily Documents.
+Backup your entire running folder including DB/config before deploying.

@@ -1,0 +1,32 @@
+P11.29 diagnostic and safety patch — NOT PRODUCTION READY.
+
+Verified from actual user log for 2026-10-22:
+- Target QAC task 1331103 / 76 items / 156 EMPTY slots.
+- Reference task 1330091 / 76 items / 156 SAVED and readable slots.
+- Numeric item 411398 slot 3 value 12.10 rejected by Chrome number validity:
+  min='1', step absent -> default step 1 -> stepMismatch=True.
+  The same historical value was readable from QAC on previous day. Without
+  QAC's authoritative allowed numeric input handling, do NOT forcibly set
+  HTML step='any', bypass validity, or submit these values.
+- Failure is during numeric input, BEFORE Save. The message does NOT establish
+  that any of the current target slots were saved.
+
+Changes:
+1. Read-only preflight validates ALL pending numeric inputs against HTML
+   min/max/step before attempting the first QAC Save. Invalid values stop
+   early with item/slot details. It does not bypass native validation.
+2. Incomplete dialog no longer instructs mandatory rescan; live QAC identity
+   and EXIST checks are still performed before a retry.
+3. UI workspace is hosted in a QScrollArea to make reducing the main window
+   more practical. Requires real Windows/PySide6 visual validation.
+
+Unresolved, NOT claimed:
+- Numeric decimal saving (QAC client/server contract must be confirmed).
+- Fast bulk result reading: QAC lazy-loads item Result on activation; static
+  HTML alone does not establish a safe complete bulk endpoint.
+- All-dialog responsive resizing, cross-run task recovery, multi-select E2E,
+  integration of self-learning across modules.
+- Live QAC integration testing and Windows PySide6 smoke testing unavailable
+  in this sandbox.
+
+Offline tests: pytest 202 passed + 32 subtests, SyntaxWarning compileall.

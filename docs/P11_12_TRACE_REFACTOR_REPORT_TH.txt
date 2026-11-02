@@ -1,0 +1,11 @@
+P11.12 DAILY RESULT REFACTOR — รายงาน
+ฐาน: P11.11
+การแก้ไข:
+1. อ่าน Result ราย Slot จากข้อความ OK/NG และ data-empty=false แม้ไม่มี Result ID (ตรงกับ QAC Trace 2026-10-19)
+2. แยกสถานะ SAVED / EMPTY / UNKNOWN และหยุดเมื่อไม่แน่ใจเพื่อไม่เขียนทับ
+3. หลัง Save ตรวจการมีผลจริงบน QAC แทนตรวจเฉพาะ Result ID; ไม่ retry Save เมื่อผลไม่แน่นอน
+4. Popup Complete! ที่ไม่มีปุ่มยืนยันไม่ถูกถือเป็น Save failure โดยอัตโนมัติ แต่ยังต้องตรวจ Result ก่อนนับสำเร็จ
+5. ไม่กด Insert result, ไม่เพิ่ม Slot, ไม่ force click
+6. ไม่บันทึก cache result_id เทียม เมื่อ DOM ยืนยัน Saved แต่ไม่มี Result ID
+TEST: 137 passed + 6 subtests (offline). ไม่ได้ตรวจ QAC live / CPU-RAM บนเครื่องหน้างาน
+Known limitation: QAC live may use additional row structures. If state UNKNOWN, fail closed.

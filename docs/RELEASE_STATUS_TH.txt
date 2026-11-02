@@ -1,0 +1,21 @@
+QAC AUTO REGISTER — 2026-10-17 — VALIDATED PARTIAL PATCH / NOT PRODUCTION READY
+
+ฐานโค้ด: v1.7.65 Modern PySide6 UI, ใช้ชุดไฟล์ที่เคยอัปโหลดในแชท
+
+แก้ไขในแพตช์นี้:
+1. Admin Mode: เข้า Settings ผ่าน Sidebar ต้องใส่ Security Key 12338 ก่อน ปุ่ม Save Settings ป้องกันการบันทึกหากยังไม่ปลดล็อก
+2. เพิ่ม Admin Edit Access CSV: เปิดตารางแก้ไขข้อมูล Access, ตรวจสิทธิ์, validate ค่า flag, บันทึกแบบ atomic replace พร้อม lock; IP แก้ในตารางไม่ได้ ปรับสิทธิ์แล้วต้อง restart/reload
+3. ซ่อน Daily Check Sheet Time Rules ซึ่งเลิกใช้งาน และไม่เขียนทับ daily_document_register rules ใน settings.json
+4. ปรับ contrast หน้า Dashboard, เพิ่ม OMBiz watermark และรูป Auto.png ใน Sidebar
+5. Production Output: คำนวณ Gross, Reject, Net รายชั่วโมงจาก Serial(Temporary) และข้อความ Reject ที่คอลัมน์ annotation ด้านขวา โดยแสดงยอดทั้งสามใน summary
+
+ตรวจสอบ: python -m compileall main.py app; python -m pytest -q tests -> 108 passed, 6 subtests passed
+
+ยังไม่พร้อม Production ด้วยเหตุผลต่อไปนี้:
+- Transfer Data to QAC (Register Task -> Upload -> Complete -> View -> Judge PASS -> Checked -> OK -> Close) ยังไม่ได้พัฒนา/ทดสอบ E2E บน QAC จริง ห้ามกดบันทึกอัตโนมัติหรือเชื่อว่าโค้ดนี้มีฟังก์ชันดังกล่าว
+- GUI Runtime บน Windows/PySide6 ยังไม่ได้ทดสอบ (สภาพแวดล้อมปัจจุบันไม่มี PySide6)
+- การนับ Reject ต้องตรวจตัวอย่าง Excel/CSV หน้างาน โดยเฉพาะรูปแบบข้อความที่คอลัมน์ท้ายและเงื่อนไขไม่ให้บวกซ้ำ
+- Access CSV Editor ยังไม่มีระบบ audit per-field, file change-detection หลังโหลด, session expiration และ PIN ที่ฝังในโค้ดไม่ทนต่อผู้โจมตีที่แก้ไฟล์ได้
+- สถานะ QAC, Login, Upload, Judge, Confirm ต้องทดสอบด้วยบัญชีทดสอบและข้อมูลทดสอบที่ได้รับอนุญาต
+
+วิธีเริ่ม: แตก ZIP ในโฟลเดอร์ใหม่ สำรอง config/access_control.csv และ settings.json ก่อนใช้งาน ตรวจ pip requirements และ Windows WebView/Playwright runtime ของเครื่องจริง

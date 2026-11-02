@@ -1,0 +1,35 @@
+{
+  "activeItem": "460918",
+  "buttons": [
+    {
+      "index": 4,
+      "className": "btn-process form-control btn-save pull-right",
+      "panelItem": "460918",
+      "panelClass": "task-input-text fieldset box box-widget",
+      "panelIsActive": true,
+      "inlineStyle": "max-width: 50%; opacity: 0.821728;",
+      "display": "block",
+      "visibility": "visible",
+      "width": 546.5062255859375,
+      "height": 49.98749542236328,
+      "disabled": false,
+      "ancestorHidden": false,
+      "ready": true
+    },
+    {
+      "index": 5,
+      "className": "btn-process form-control btn-save-text pull-right",
+      "panelItem": "460918",
+      "panelClass": "task-input-text fieldset box box-widget",
+      "panelIsActive": true,
+      "inlineStyle": "display: none; max-width: 50%;",
+      "display": "none",
+      "visibility": "visible",
+      "width": 0,
+      "height": 0,
+      "disabled": false,
+      "ancestorHidden": true,
+      "ready": false
+    }
+  ]
+}

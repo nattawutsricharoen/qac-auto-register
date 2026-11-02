@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+build/
+dist/
+logs/
+pending_logs/
+access_cache.json
+*.db
+*.sqlite3
+config/settings.json
+config/access_control.csv
+.env
+.env.*

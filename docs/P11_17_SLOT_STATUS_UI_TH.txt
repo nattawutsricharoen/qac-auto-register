@@ -1,0 +1,1 @@
+P11.17: Show QAC-specific EXIST/EMPTY/UNKNOWN status next to each Daily Document slot. The status is sourced from the live Measure schema, never from template. SAVED and UNKNOWN are not editable. Scan showing EMPTY is not proof of saved values. Offline tests: 149 passed, 11 subtests. Live QAC not tested.

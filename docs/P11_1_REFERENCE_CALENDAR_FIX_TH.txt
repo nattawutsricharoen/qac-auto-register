@@ -1,0 +1,6 @@
+P11.1 Calendar fix
+- Default Reference Date = Production Date - 1 day
+- Date upper bound follows Production Date
+- Valid older reference selections are preserved
+- Does not alter QAC automation workflows
+- Python source compile checked; requires GUI validation on Windows
